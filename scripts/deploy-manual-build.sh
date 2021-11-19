@@ -24,14 +24,14 @@ echo 'EXPOSE 80' >> Dockerfile
 # Specify the command to run when the container starts
 echo 'ENTRYPOINT /usr/sbin/httpd -DFOREGROUND' >> Dockerfile
 
+# Build the image with a descriptive tag
+docker build --tag fedora:httpd -f ./Dockerfile
 # Run the container and publish the port
-docker run -p 8080:80 --name myhttpd --rm fedora:myhttpd
+docker run -p 8080:80 --name httpd --rm fedora:httpd
 # View the port information
-docker port myhttpd
+docker port httpd
 # Access the web page from the host device
 curl localhost:8080
 
-firewall-cmd --list-all
-# Add a port with
-firewall-cmd --add-port 8080/tcp
+
 echo "========================================================================================="

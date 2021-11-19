@@ -27,7 +27,7 @@ jobs:
         cat /etc/issue
         cat /etc/os-release
         sudo apt-get install -y neofetch && neofetch 
-    - name: "os fingerprinting"
+    - name: "build manual docker"
       run: sudo make deploy-manual-build     
 
   ubuntu-latest-job:
