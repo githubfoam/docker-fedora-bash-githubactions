@@ -13,19 +13,21 @@ mkdir demo-docker && cd demo-docker
 mkdir demo-httpd && cd demo-httpd && echo 'sample container' > index.html
 
 # https://docs.fedoraproject.org/en-US/iot/build-docker/
-# Start the Dockerfile with a FROM command to indicate the base image
-echo 'FROM fedora:latest' >> Dockerfile
+# Start the Dockerfile.fedora.httpd with a FROM command to indicate the base image
+echo 'FROM fedora:latest' >> Dockerfile.fedora.httpd
 # update the image and add any application and utilities
-echo 'RUN dnf -y update && dnf -y install httpd git  && dnf clean all' >> Dockerfile
+echo 'RUN dnf -y update && dnf -y install httpd git  && dnf clean all' >> Dockerfile.fedora.httpd.fedora.httpd
 # Copy to the sample index.html file into the container
-echo 'COPY index.html /var/www/html/index.html' >> Dockerfile
+echo 'COPY index.html /var/www/html/index.html' >> Dockerfile.fedora.httpd
 # what ports are available to publish
-echo 'EXPOSE 80' >> Dockerfile
+echo 'EXPOSE 80' >> Dockerfile.fedora.httpd
 # Specify the command to run when the container starts
-echo 'ENTRYPOINT /usr/sbin/httpd -DFOREGROUND' >> Dockerfile
+echo 'ENTRYPOINT /usr/sbin/httpd -DFOREGROUND' >> Dockerfile.fedora.httpd
+
+stat Dockerfile.fedora.httpd
 
 # Build the image with a descriptive tag
-docker build --tag fedora:httpd -f ./Dockerfile
+ docker build --no-cache --rm  -t fedora:httpd . --file Dockerfile.fedora.httpd
 # Run the container and publish the port
 docker run -p 8080:80 --name httpd --rm fedora:httpd
 # View the port information
