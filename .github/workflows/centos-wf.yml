@@ -1,0 +1,131 @@
+name: "fedora bash local CI workflow"
+
+
+on:
+  push:
+    branches: [ main ]
+  schedule:
+      - cron:  '0 0 1 * *' ##execution of a task in the first minute of the month 
+
+
+jobs:
+
+  ubuntu-fedora-latest-job:
+    name: "fedora docker ubuntu latest"
+    runs-on: ubuntu-latest
+    env:
+      distribution: "fedora" #https://hub.docker.com/_/fedora
+      version: "latest"
+      name: "fedora/base"
+      dockerfiledir: "dockerfiles"
+      dockerfilename: "Dockerfile.fedora"
+    steps:
+    - uses: actions/checkout@v2
+    - name: "os fingerprinting"
+      run: |
+        hostnamectl status
+        lsb_release -a
+        lsb_release -d
+        cat /etc/lsb-release
+        cat /etc/issue
+        cat /etc/os-release
+        sudo apt-get install -y neofetch && neofetch   
+    - name: "docker build fedora"
+      run: |
+        # destroyed afterwards (use --rm )
+        # all subsequent Dockerfile commands generate new images and the cache is not used
+        sudo docker build --no-cache --rm  -t ${name}:${version} . --file ${dockerfiledir}/${dockerfilename} 
+        docker image ls
+        docker image history ${name}:${version}
+        docker system df -v               
+        docker image inspect ${name}:${version}
+
+  ubuntu-arm64v8-latest-job:
+    name: "arm64v8 fedora docker ubuntu latest"
+    runs-on: ubuntu-latest
+    env:
+      distribution: "fedora" 
+      version: "latest"
+      name: "fedora/arm64v8"
+      dockerfiledir: "dockerfiles"
+      dockerfilename: "Dockerfile.fedora.arm64v8"
+    steps:
+    - uses: actions/checkout@v2
+    - name: "os fingerprinting"
+      run: |
+        hostnamectl status
+        lsb_release -a
+        lsb_release -d
+        cat /etc/lsb-release
+        cat /etc/issue
+        cat /etc/os-release
+        sudo apt-get install -y neofetch && neofetch   
+    - name: "docker build fedora"
+      run: |
+        # destroyed afterwards (use --rm )
+        # all subsequent Dockerfile commands generate new images and the cache is not used
+        sudo docker build --no-cache --rm  -t ${name}:${version} . --file ${dockerfiledir}/${dockerfilename} 
+        docker image ls
+        docker image history ${name}:${version}
+        docker system df -v               
+        docker image inspect ${name}:${version}
+
+  ubuntu-ppc64le-latest-job:
+    name: "ppc64le fedora docker ubuntu latest"
+    runs-on: ubuntu-latest
+    env:
+      distribution: "fedora" 
+      version: "latest"
+      name: "fedora/ppc64le"
+      dockerfiledir: "dockerfiles"
+      dockerfilename: "Dockerfile.fedora.ppc64le"
+    steps:
+    - uses: actions/checkout@v2
+    - name: "os fingerprinting"
+      run: |
+        hostnamectl status
+        lsb_release -a
+        lsb_release -d
+        cat /etc/lsb-release
+        cat /etc/issue
+        cat /etc/os-release
+        sudo apt-get install -y neofetch && neofetch   
+    - name: "docker build fedora"
+      run: |
+        # destroyed afterwards (use --rm )
+        # all subsequent Dockerfile commands generate new images and the cache is not used
+        sudo docker build --no-cache --rm  -t ${name}:${version} . --file ${dockerfiledir}/${dockerfilename} 
+        docker image ls
+        docker image history ${name}:${version}
+        docker system df -v               
+        docker image inspect ${name}:${version}
+
+  ubuntu-s390x-latest-job:
+    name: "s390x fedora docker ubuntu latest"
+    runs-on: ubuntu-latest
+    env:
+      distribution: "fedora" 
+      version: "latest"
+      name: "fedora/s390x"
+      dockerfiledir: "dockerfiles"
+      dockerfilename: "Dockerfile.fedora.s390x"
+    steps:
+    - uses: actions/checkout@v2
+    - name: "os fingerprinting"
+      run: |
+        hostnamectl status
+        lsb_release -a
+        lsb_release -d
+        cat /etc/lsb-release
+        cat /etc/issue
+        cat /etc/os-release
+        sudo apt-get install -y neofetch && neofetch   
+    - name: "docker build fedora"
+      run: |
+        # destroyed afterwards (use --rm )
+        # all subsequent Dockerfile commands generate new images and the cache is not used
+        sudo docker build --no-cache --rm  -t ${name}:${version} . --file ${dockerfiledir}/${dockerfilename} 
+        docker image ls
+        docker image history ${name}:${version}
+        docker system df -v               
+        docker image inspect ${name}:${version}

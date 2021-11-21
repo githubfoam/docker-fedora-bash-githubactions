@@ -1,0 +1,10 @@
+# https://hub.docker.com/_/fedora
+FROM fedora:latest
+LABEL org.opencontainers.image.authors="githubfoam"
+
+
+RUN dnf update -qy && dnf install \
+    gcc \
+    tcpdump -yq
+
+WORKDIR /tmp

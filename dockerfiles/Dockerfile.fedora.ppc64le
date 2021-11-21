@@ -1,0 +1,10 @@
+# https://hub.docker.com/r/ppc64le/fedora/
+FROM ppc64le/fedora
+LABEL org.opencontainers.image.authors="githubfoam"
+
+
+RUN dnf update -qy && dnf install \
+    gcc \
+    tcpdump -yq
+
+WORKDIR /tmp
