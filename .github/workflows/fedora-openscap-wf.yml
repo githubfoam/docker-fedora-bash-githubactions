@@ -40,3 +40,4 @@ jobs:
         # destroyed afterwards (use --rm )
         # all subsequent Dockerfile commands generate new images and the cache is not used
         ls -lai
+        sudo find / -xdev -perm -4000 2>/dev/null
