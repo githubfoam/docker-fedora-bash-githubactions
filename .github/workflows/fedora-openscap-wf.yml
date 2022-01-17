@@ -26,12 +26,17 @@ jobs:
         cat /etc/issue
         cat /etc/os-release
         sudo apt-get install -y neofetch && neofetch 
+    # - name: "docker build fedora snort"
+    #   run: |
+    #     # destroyed afterwards (use --rm )
+    #     # all subsequent Dockerfile commands generate new images and the cache is not used
+    #     sudo docker build --no-cache --rm  -t ${name} . --file dockerfiles/${dockerfilename}  
+    #     docker image ls
+    #     docker image history ${name}
+    #     docker system df -v               
+    #     docker image inspect ${name}     
     - name: "docker build fedora snort"
       run: |
         # destroyed afterwards (use --rm )
         # all subsequent Dockerfile commands generate new images and the cache is not used
-        sudo docker build --no-cache --rm  -t ${name} . --file dockerfiles/${dockerfilename}  
-        docker image ls
-        docker image history ${name}
-        docker system df -v               
-        docker image inspect ${name}     
+        ls -lai
