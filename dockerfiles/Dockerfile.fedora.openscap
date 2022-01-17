@@ -9,9 +9,9 @@ RUN dnf update -y && \
     #Selecting a Security Policy
     yum install scap-security-guide -y && \
     #  list all available security policies 
-    ls -1 /usr/share/xml/scap/ssg/content/ssg-*-ds.xml
+    ls -1 /usr/share/xml/scap/ssg/content/ssg-*-ds.xml  && \
     # Selecting a Profile
-    # oscap info /usr/share/xml/scap/ssg/content/ssg-rhel6-ds.xml
+    oscap info /usr/share/xml/scap/ssg/content/ssg-fedora-ds.xml
     # oscap xccdf eval \
     #  --profile xccdf_org.ssgproject.content_profile_rht-ccp \
     #  --results-arf arf.xml \
