@@ -1,0 +1,37 @@
+name: "openscap fedora  CI workflow"
+
+
+on:
+  push:
+    branches: [ test ]
+
+
+jobs:
+
+  ubuntu-latest-fedora-openscap-job:
+    name: "openscap fedora ubuntu-latest"
+    runs-on: ubuntu-latest
+    env:
+      version: "latest"
+      name: "fedora:openscap"
+      dockerfilename: "Dockerfile.fedora.openscap"
+    steps:
+    - uses: actions/checkout@v2
+    - name: "os fingerprinting"
+      run: |
+        hostnamectl status
+        lsb_release -a
+        lsb_release -d
+        cat /etc/lsb-release
+        cat /etc/issue
+        cat /etc/os-release
+        sudo apt-get install -y neofetch && neofetch 
+    - name: "docker build fedora snort"
+      run: |
+        # destroyed afterwards (use --rm )
+        # all subsequent Dockerfile commands generate new images and the cache is not used
+        sudo docker build --no-cache --rm  -t ${name} . --file dockerfiles/${dockerfilename}  
+        docker image ls
+        docker image history ${name}
+        docker system df -v               
+        docker image inspect ${name}     
