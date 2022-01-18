@@ -13,7 +13,7 @@ RUN dnf update -y && \
     # Selecting a Profile
     oscap info /usr/share/xml/scap/ssg/content/ssg-fedora-ds.xml && \
     # PCI-DSS v3.2.1 Control Baseline for Fedora
-    # oscap xccdf eval \
+    oscap xccdf eval \
      --profile xccdf_org.ssgproject.content_profile_pci-dss \
      --results-arf arf.xml \
      --report fedora_report.html \
