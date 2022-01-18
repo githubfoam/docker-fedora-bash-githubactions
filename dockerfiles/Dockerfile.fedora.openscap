@@ -13,7 +13,7 @@ RUN dnf update -y && \
     # Selecting a Profile
     oscap info /usr/share/xml/scap/ssg/content/ssg-fedora-ds.xml && \
     # PCI-DSS v3.2.1 Control Baseline for Fedora
-    oscap xccdf eval \
+    # oscap xccdf eval \
      --profile xccdf_org.ssgproject.content_profile_pci-dss \
      --results-arf arf.xml \
      --report fedora_report.html \
@@ -25,4 +25,4 @@ RUN dnf update -y && \
 # RUN echo -e "#!/bin/bash\n\ncd /openscap/build\nif [ -d /openscap/build/tests ]; then\n  sleep 1d\n  exit 0\nelse\n  [ -n \"\$PR\" ] && git pr \$PR\n  echo \"Testing branch: \$(git branch --show-current)\"\n  cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ../ && make all\n  ctest --output-on-failure\nfi" >> /run.sh
 # RUN chmod +x /run.sh
 
-CMD /bin/bash -c /run.sh; /bin/bash
+# CMD /bin/bash -c /run.sh; /bin/bash
