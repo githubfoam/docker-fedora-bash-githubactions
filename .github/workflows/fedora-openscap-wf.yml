@@ -80,3 +80,11 @@ jobs:
     #     echo 'root2:WVLY0mgH0RtUI:0:0:root:/root:/bin/bash' | sudo tee source/passwd
     #     ln -s /etc destination
     #     su root2
+
+  debug:
+    needs: [ubuntu-latest-fedora-openscap-job]
+    runs-on: ubuntu-latest
+    if: ${{ failure() }}
+    steps:
+      - uses: actions/checkout@v2
+      - run: ./debug    

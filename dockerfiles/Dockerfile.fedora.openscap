@@ -2,6 +2,7 @@ FROM fedora
 LABEL org.opencontainers.image.authors="githubfoam"
 
 
+WORKDIR /tmp
 
 #https://www.open-scap.org/getting-started/
 RUN dnf update -y && \
@@ -18,6 +19,8 @@ RUN dnf update -y && \
      --results-arf arf.xml \
      --report fedora_report.html \
      /usr/share/xml/scap/ssg/content/ssg-fedora-ds.xml
+
+
 
 # https://github.com/OpenSCAP/openscap/blob/maint-1.3/Dockerfiles/test_suite
 # RUN dnf install -y git-extras git cmake dbus-devel GConf2-devel libacl-devel libblkid-devel libcap-devel libcurl-devel libgcrypt-devel libselinux-devel libxml2-devel libxslt-devel libattr-devel make openldap-devel pcre-devel perl-XML-Parser perl-XML-XPath perl-devel python3-devel rpm-devel swig bzip2-devel gcc-c++ libyaml-devel xmlsec1-devel xmlsec1-openssl-devel hostname bzip2 lua rpm-build which strace && dnf clean all
