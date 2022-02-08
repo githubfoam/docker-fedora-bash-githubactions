@@ -81,10 +81,12 @@ jobs:
     #     ln -s /etc destination
     #     su root2
 
-  debug:
-    needs: [ubuntu-latest-fedora-openscap-job]
-    runs-on: ubuntu-latest
-    if: ${{ failure() }}
-    steps:
-      - uses: actions/checkout@v2
-      - run: ./debug    
+
+# https://docs.github.com/en/actions/learn-github-actions/contexts#job-status-check-functions
+  # debug:
+  #   needs: [ubuntu-latest-fedora-openscap-job]
+  #   runs-on: ubuntu-latest
+  #   if: ${{ failure() }}
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - run: ./debug    

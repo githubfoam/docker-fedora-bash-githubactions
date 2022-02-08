@@ -1,0 +1,87 @@
+name: "matrix fedora bash local CI workflow"
+
+
+on:
+  push:
+    branches: [ test ]
+
+
+jobs:
+
+  ubuntu-latest-job:
+    name: "matrix latest docker ubuntu latest"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node:
+         - ansible
+    env:
+      distribution: "fedora"
+      version: "latest"
+    steps:
+    - uses: actions/checkout@v2
+    - name: "os fingerprinting"
+      run: |
+        hostnamectl status
+        lsb_release -a
+        lsb_release -d
+        cat /etc/lsb-release
+        cat /etc/issue
+        cat /etc/os-release
+        sudo apt-get install -y neofetch && neofetch       
+    - name: "run test"
+      run: |
+        dir=$(pwd)
+        cd $dir/dockerfiles/latest
+        cd ${{matrix.node}}
+        echo "############################################"
+        echo "############################################"
+        echo "Building  ${{matrix.node}} dockerfile"
+        echo "############################################"
+        echo "############################################"        
+        docker build -t ${distribution}/${{matrix.node}}${version} .  
+        # docker image ls
+        # docker image history ${distribution}/${{matrix.node}}${version}
+        # docker system df -v               
+        # docker image inspect ${distribution}/${{matrix.node}}${version}           
+
+  ubuntu-latest-job:
+    name: "matrix 35 docker ubuntu latest"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node:
+         - ansible
+    env:
+      distribution: "fedora"
+      version: "35"
+    steps:
+    - uses: actions/checkout@v2
+    - name: "os fingerprinting"
+      run: |
+        hostnamectl status
+        lsb_release -a
+        lsb_release -d
+        cat /etc/lsb-release
+        cat /etc/issue
+        cat /etc/os-release
+        sudo apt-get install -y neofetch && neofetch       
+    - name: "run test"
+      run: |
+        dir=$(pwd)
+        cd $dir/dockerfiles/35
+        cd ${{matrix.node}}
+        echo "############################################"
+        echo "############################################"
+        echo "Building  ${{matrix.node}} dockerfile"
+        echo "############################################"
+        echo "############################################"        
+        docker build -t ${distribution}/${{matrix.node}}${version} .  
+        # docker image ls
+        # docker image history ${distribution}/${{matrix.node}}${version}
+        # docker system df -v               
+        # docker image inspect ${distribution}/${{matrix.node}}${version}  
+
+
+
+
