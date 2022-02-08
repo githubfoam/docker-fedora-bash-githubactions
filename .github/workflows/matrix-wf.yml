@@ -68,8 +68,9 @@ jobs:
         sudo apt-get install -y neofetch && neofetch
     - name: "download tar file"
       run: |
+        cd $dir/dockerfiles/36
         wget https://github.com/fedora-cloud/docker-brew-fedora/blob/36/x86_64/fedora-Rawhide.20211125-x86_64.tar.xz
-        du -h fedora*               
+        du -h fedora*                     
     - name: "run test"
       run: |
         dir=$(pwd)
