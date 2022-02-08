@@ -43,7 +43,48 @@ jobs:
         # docker image ls
         # docker image history ${distribution}/${{matrix.node}}${version}
         # docker system df -v               
-        # docker image inspect ${distribution}/${{matrix.node}}${version}           
+        # docker image inspect ${distribution}/${{matrix.node}}${version} 
+
+  fedora-36-ubuntu-latest-job:
+    name: "matrix 36 docker ubuntu latest"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node:
+         - scratch
+    env:
+      distribution: "fedora"
+      version: "36"
+    steps:
+    - uses: actions/checkout@v2
+    - name: "os fingerprinting"
+      run: |
+        hostnamectl status
+        lsb_release -a
+        lsb_release -d
+        cat /etc/lsb-release
+        cat /etc/issue
+        cat /etc/os-release
+        sudo apt-get install -y neofetch && neofetch
+    - name: "download tar file"
+      run: |
+        wget https://github.com/fedora-cloud/docker-brew-fedora/blob/36/x86_64/fedora-Rawhide.20211125-x86_64.tar.xz
+        du -h fedora*               
+    - name: "run test"
+      run: |
+        dir=$(pwd)
+        cd $dir/dockerfiles/36
+        cd ${{matrix.node}}
+        echo "############################################"
+        echo "############################################"
+        echo "Building  ${{matrix.node}} dockerfile"
+        echo "############################################"
+        echo "############################################"        
+        docker build -t ${distribution}/${{matrix.node}}${version} .  
+        # docker image ls
+        # docker image history ${distribution}/${{matrix.node}}${version}
+        # docker system df -v               
+        # docker image inspect ${distribution}/${{matrix.node}}${version}
 
   fedora-35-ubuntu-latest-job:
     name: "matrix 35 docker ubuntu latest"
