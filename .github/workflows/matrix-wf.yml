@@ -66,17 +66,19 @@ jobs:
         cat /etc/issue
         cat /etc/os-release
         sudo apt-get install -y neofetch && neofetch
-    - name: "download tar file"
-      run: |
-        dir=$(pwd)
-        cd $dir/dockerfiles/36
-        wget https://github.com/fedora-cloud/docker-brew-fedora/blob/36/x86_64/fedora-Rawhide.20211125-x86_64.tar.xz
-        du -h fedora*                     
+    # - name: "download tar file"
+    #   run: |
+    #     dir=$(pwd)
+    #     cd $dir/dockerfiles/36
+    #     wget https://github.com/fedora-cloud/docker-brew-fedora/blob/36/x86_64/fedora-Rawhide.20211125-x86_64.tar.xz
+    #     du -h fedora*                     
     - name: "run test"
       run: |
         dir=$(pwd)
-        cd $dir/dockerfiles/36
-        cd ${{matrix.node}}
+        # cd $dir/dockerfiles/36/scratch
+        wget -o $dir/dockerfiles/36/${{matrix.node}}/fedora-Rawhide.20211125-x86_64.tar.xz https://github.com/fedora-cloud/docker-brew-fedora/blob/36/x86_64/fedora-Rawhide.20211125-x86_64.tar.xz
+        du -h $dir/dockerfiles/36/${{matrix.node}}/fedora-Rawhide.20211125-x86_64.tar.xz      
+        cd $dir/dockerfiles/36/${{matrix.node}}
         echo "############################################"
         echo "############################################"
         echo "Building  ${{matrix.node}} dockerfile"
