@@ -94,6 +94,7 @@ jobs:
       matrix:
         node:
          - ansible
+         - multi-ansible
     env:
       distribution: "fedora"
       version: "35"
