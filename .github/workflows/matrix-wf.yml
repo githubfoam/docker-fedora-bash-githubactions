@@ -8,7 +8,7 @@ on:
 
 jobs:
 
-  ubuntu-latest-job:
+  fedora-latest-ubuntu-latest-job:
     name: "matrix latest docker ubuntu latest"
     runs-on: ubuntu-latest
     strategy:
@@ -45,7 +45,7 @@ jobs:
         # docker system df -v               
         # docker image inspect ${distribution}/${{matrix.node}}${version}           
 
-  ubuntu-latest-job:
+  fedora-35-ubuntu-latest-job:
     name: "matrix 35 docker ubuntu latest"
     runs-on: ubuntu-latest
     strategy:
