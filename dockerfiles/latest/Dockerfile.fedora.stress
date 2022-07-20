@@ -3,9 +3,10 @@ FROM fedora:latest
 # RUN dnf -y update && dnf clean all
 RUN set -ex && \
   yum update -y && \
+  yum clean all && \
   yum install stress procps-ng -y
 
 ENV CPU_LOAD=1 MEM_LOAD=1 MEM_SIZE=256M
 CMD stress --cpu $CPU_LOAD --vm $MEM_LOAD --vm-bytes $MEM_SIZE
-CMD ["/usr/sbin/init"]
+
 
