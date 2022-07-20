@@ -1,0 +1,66 @@
+name: "fedora stress CI workflow"
+
+
+on:
+  push:
+    branches: [ test ]
+
+
+jobs:
+
+  # ubuntu-latest-manual-build-job:
+  #   name: "manual build docker fedora ubuntu ubuntu-latest"
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     distribution: "fedora" #https://hub.docker.com/_/fedora
+  #     version: "latest"
+  #     name: "fedora:stress"
+  #     dockerfilename: "Dockerfile.fedora.stress"
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - name: "os fingerprinting"
+  #     run: |
+  #       hostnamectl status
+  #       lsb_release -a
+  #       lsb_release -d
+  #       cat /etc/lsb-release
+  #       cat /etc/issue
+  #       cat /etc/os-release
+  #       sudo apt-get install -y neofetch && neofetch 
+  #   - name: "build manual docker"
+  #     run: sudo make deploy-manual-build     
+
+  ubuntu-latest-job:
+    name: "docker fedora stress on ubuntu latest"
+    runs-on: ubuntu-latest
+    env:
+      distribution: "fedora" #https://hub.docker.com/_/fedora
+      version: "latest"
+      name: "fedora:stress"
+      dockerfolder: "dockerfiles"
+      dockerfilename: "Dockerfile.fedora.stress"
+    steps:
+    - uses: actions/checkout@v2
+    - name: "os fingerprinting"
+      run: |
+        hostnamectl status
+        lsb_release -a
+        lsb_release -d
+        cat /etc/lsb-release
+        cat /etc/issue
+        cat /etc/os-release
+        sudo apt-get install -y neofetch && neofetch   
+    - name: "docker build fedora stress"
+      run: |
+        # destroyed afterwards (use --rm )
+        # all subsequent Dockerfile commands generate new images and the cache is not used
+        # sudo docker build --no-cache --rm  -t ${name} . --file dockerfiles/${dockerfilename}  
+        sudo docker build --no-cache --rm  -t ${name} . --file ${dockerfiles}/${dockerfilename}  
+        docker image ls
+        docker image history ${name}
+        docker system df -v               
+        docker image inspect ${name}     
+ 
+
+
+
