@@ -37,7 +37,7 @@ jobs:
       distribution: "fedora" #https://hub.docker.com/_/fedora
       version: "latest"
       name: "fedora:stress"
-      dockerfolder: "dockerfiles"
+      dockerfolder: "dockerfiles/latest"
       dockerfilename: "Dockerfile.fedora.stress"
     steps:
     - uses: actions/checkout@v2
